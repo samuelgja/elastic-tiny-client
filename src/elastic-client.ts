@@ -383,8 +383,6 @@ export class ElasticClient {
     }
     delete params.index
 
-    console.log(params.body.map((item) => JSON.stringify(item)).join('\n'))
-
     return await this.fetch(url, {
       method: 'POST',
       headers: this.#headers,
