@@ -105,7 +105,7 @@ export class ElasticClient {
     return { code, error, data: null }
   }
 
-  async search(params: SearchRequest): Promise<Response<SearchResponse>> {
+  async search<T>(params: SearchRequest): Promise<Response<SearchResponse<T>>> {
     let url = `/${params.index}/${params.version ? `${params.version}/` : ''}_search`
     const queryParams = queryParametersGenerator(
       {
@@ -147,7 +147,7 @@ export class ElasticClient {
     })
   }
 
-  async get(params: GetRequest): Promise<Response<GetResponse>> {
+  async get<T>(params: GetRequest): Promise<Response<GetResponse<T>>> {
     let url = `/${params.index}${params.id}`
 
     const queryParams = queryParametersGenerator(
@@ -197,7 +197,7 @@ export class ElasticClient {
     })
   }
 
-  async index(params: IndexRequest): Promise<Response<IndexResponse>> {
+  async index<T>(params: IndexRequest<T>): Promise<Response<IndexResponse>> {
     let url = `/${params.index}/${params.version_type ? params.version_type + '/' : ''}_doc${
       params.id ? `/${params.id}` : ''
     }`
@@ -230,7 +230,7 @@ export class ElasticClient {
     })
   }
 
-  async update(params: UpdateRequest): Promise<Response<UpdateResponse>> {
+  async update<T>(params: UpdateRequest<T>): Promise<Response<UpdateResponse<T>>> {
     let url = `/${params.index}/_update${params.id ? `/${params.id}` : ''}`
 
     const queryParams = queryParametersGenerator(
@@ -360,7 +360,7 @@ export class ElasticClient {
     })
   }
 
-  async bulk(params: BulkRequest): Promise<Response<BulkResponse>> {
+  async bulk<T>(params: BulkRequest<T>): Promise<Response<BulkResponse>> {
     let url = `/_bulk`
 
     const queryParams = queryParametersGenerator(
