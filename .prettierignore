@@ -1,0 +1,5 @@
+
+src/**/*.scss.d.ts
+src/**/*.css.d.ts
+src/**/*.json.d.ts
+

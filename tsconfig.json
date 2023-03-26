@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+      "module": "esnext",
+      "target": "esnext",
+      "types": ["bun-types", "jest"],
+      "esModuleInterop": true,
+      "outDir": "lib",
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+  }
