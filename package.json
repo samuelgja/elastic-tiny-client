@@ -1,6 +1,6 @@
 {
   "name": "elastic-tiny-client",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc && node scripts/copy-data.mjs",
@@ -38,8 +38,5 @@
     "prettier": "^2.8.7",
     "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
-  },
-  "dependencies": {
-    "elastic-tiny-client": "^0.0.3"
   }
 }
