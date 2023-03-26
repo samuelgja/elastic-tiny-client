@@ -41,12 +41,17 @@ export interface ClientOptions {
    * Authorization for elasticsearch
    */
   authorization?: Authorization
+  /**
+   * When you want to use your own fetch function or polyfill
+   */
+  fetch?: typeof fetch
 }
 
 export class ElasticClient {
   readonly #hosts: string[]
   readonly #headers = HEADERS
   readonly #authorization?: Authorization
+  readonly #fetch = fetch
 
   constructor(options: ClientOptions) {
     this.#hosts = options.hosts
@@ -57,6 +62,10 @@ export class ElasticClient {
       this.#headers.Authorization = `Basic ${Buffer.from(
         `${this.#authorization.username}:${this.#authorization.password}`
       ).toString('base64')}`
+    }
+
+    if (options.fetch) {
+      this.#fetch = options.fetch
     }
   }
 
@@ -72,7 +81,7 @@ export class ElasticClient {
       const host = this.#hosts[Math.floor(Math.random() * this.#hosts.length)]
       const fetchUrl = `${host}${urlWithoutHost}`
       try {
-        const response = await fetch(fetchUrl, options)
+        const response = await this.#fetch(fetchUrl, options)
 
         code = response.status
         if (response.ok) {
