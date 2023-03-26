@@ -10,7 +10,7 @@
     "format": "npx prettier --list-different --write \"src/**/*.{ts,tsx}\"",
     "code-check": "yarn typecheck && yarn lint && yarn format && bun test",
     "typecheck": "tsc --noEmit",
-    "pub": "yarn code-check && yarn build && cd lib &&  yarn publish",
+    "pub": "yarn code-check && yarn build && cd lib && yarn publish",
     "test": "jest --env=jsdom --verbose --runInBand"
   },
   "devDependencies": {
