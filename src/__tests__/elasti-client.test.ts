@@ -14,20 +14,27 @@ describe('elastic-client', () => {
     } catch {}
   })
 
-  it('should index and update document', async () => {
+  it('should index document', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
-    const response1 = await client.index({
+    const response = await client.index({
       index: 'hello-world',
       document: { hello: true },
       id: '1',
     })
-    const response2 = await client.update({
+
+    expect(response.code).toBe(201)
+  })
+
+  it('should update document', async () => {
+    const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
+
+    const response = await client.update({
       index: 'hello-world',
       doc: { hello: false },
       id: '1',
     })
-    expect(response1.code).toBe(201)
-    expect(response2.code).toBe(200)
+
+    expect(response.code).toBe(200)
   })
 
   it('should search document', async () => {

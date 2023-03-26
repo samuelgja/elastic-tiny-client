@@ -254,11 +254,12 @@ export class ElasticClient {
     if (queryParams) {
       url += `?${queryParams}`
     }
+    delete params.id
     delete params.index
     return await this.fetch(url, {
       method: 'POST',
       headers: this.#headers,
-      body: JSON.stringify({ doc: params.doc }),
+      body: JSON.stringify(params),
     })
   }
 
