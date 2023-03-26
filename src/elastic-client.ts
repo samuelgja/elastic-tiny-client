@@ -1,5 +1,7 @@
 import { queryParametersGenerator } from './query-parameters-generator'
 import {
+  BulkRequest,
+  BulkResponse,
   CountRequest,
   CountResponse,
   DeleteByQueryRequest,
@@ -343,6 +345,35 @@ export class ElasticClient {
         q: params.q,
         routing: params.routing,
         terminate_after: params.terminate_after,
+      },
+      params
+    )
+
+    if (queryParams) {
+      url += `?${queryParams}`
+    }
+    delete params.index
+    return await this.fetch(url, {
+      method: 'POST',
+      headers: this.#headers,
+      body: JSON.stringify(params),
+    })
+  }
+
+  async bulk(params: BulkRequest): Promise<Response<BulkResponse>> {
+    let url = `/_bulk`
+
+    const queryParams = queryParametersGenerator(
+      {
+        pipeline: params.pipeline,
+        refresh: params.refresh,
+        require_alias: params.require_alias,
+        routing: params.routing,
+        _source: params._source,
+        _source_excludes: params._source_excludes,
+        _source_includes: params._source_includes,
+        timeout: params.timeout,
+        wait_for_active_shards: params.wait_for_active_shards,
       },
       params
     )
