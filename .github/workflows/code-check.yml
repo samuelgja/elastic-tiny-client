@@ -1,0 +1,29 @@
+name: Code check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  code-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: yarn
+      - run: git fetch origin "$BASE_COMMIT_SHA"
+      - name: Install dependencies 
+        run: yarn install --frozen-lockfile --check-files
+      - name: Format code
+        run: yarn format
+      - name: Type check
+        run: yarn typecheck
+      - name: Lint
+        run: yarn eslint
+      - name: Test
+        run: yarn test
+    

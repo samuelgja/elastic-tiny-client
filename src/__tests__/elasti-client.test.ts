@@ -1,5 +1,5 @@
 import { ElasticClient } from '../elastic-client'
-
+import 'isomorphic-fetch'
 describe('elastic-client', () => {
   it('should create and delete elastic index', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })

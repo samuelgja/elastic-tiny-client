@@ -1,5 +1,8 @@
 # Elastic search tiny client
 
+[![Build](https://github.com/samuelgjabel/elastic-tiny-client/actions/workflows/build.yml/badge.svg)](https://github.com/samuelgjabel/elastic-tiny-client/actions/workflows/build.yml) [![Code quality check](https://github.com/samuelgjabel/elastic-tiny-client/actions/workflows/code-check.yml/badge.svg)](https://github.com/samuelgjabel/elastic-tiny-client/actions/workflows/code-check.yml)
+[![Build Size](https://img.shields.io/bundlephobia/minzip/elastic-tiny-client?label=Bundle%20size)](https://bundlephobia.com/result?p=elastic-tiny-client)
+
 Zero dependency, fetch based tiny elasticsearch client.
 
 Also it work's in browser, [node.js](http://nodejs.org/) and [bun](https://bun.sh/) 🥳

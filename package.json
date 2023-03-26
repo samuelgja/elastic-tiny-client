@@ -10,7 +10,8 @@
     "format": "npx prettier --list-different --write \"src/**/*.{ts,tsx}\"",
     "code-check": "yarn typecheck && yarn lint && yarn format && bun test",
     "typecheck": "tsc --noEmit",
-    "pub": "yarn code-check && yarn build && yarn publish"
+    "pub": "yarn code-check && yarn build && yarn publish",
+    "test": "jest --env=jsdom --verbose --runInBand"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.0",
@@ -30,8 +31,12 @@
     "eslint-plugin-unicorn": "40.1.0",
     "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
+    "isomorphic-fetch": "^3.0.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
+    "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
   }
 }
