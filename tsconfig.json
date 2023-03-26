@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
     "lib": ["ESNext", "DOM"],
-      "module": "esnext",
+      "module": "CommonJS",
       "target": "esnext",
       "types": ["bun-types", "jest"],
       "esModuleInterop": true,
-      "outDir": "lib",
+      "outDir": "lib/lib",
+      "declaration": true,
+
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]

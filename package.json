@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "main": "lib/index.js",
   "scripts": {
+    "build": "tsc && node scripts/copy-data.mjs",
     "watch": "nodemon --config nodemon.json",
     "watch:test": "nodemon --config nodemon.test.json",
     "lint": "npx eslint \"src/**\"",
     "format": "npx prettier --list-different --write \"src/**/*.{ts,tsx}\"",
-    "code-check": "yarn lint && yarn format && bun test"
+    "code-check": "yarn typecheck && yarn lint && yarn format && bun test",
+    "typecheck": "tsc --noEmit",
+    "pub": "yarn code-check && yarn build && yarn publish"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.0",
@@ -25,13 +28,10 @@
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-security": "1.5.0",
     "eslint-plugin-unicorn": "40.1.0",
+    "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "typescript": "^5.0.2"
-  },
-  "dependencies": {
-    "@backin/models": "^0.0.1",
-    "@backin/resolver": "^0.0.5"
   }
 }
