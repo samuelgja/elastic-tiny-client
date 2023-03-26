@@ -58,6 +58,7 @@ export interface BulkRequest<TDocument = unknown, TPartialDocument = unknown> ex
   pipeline?: string
   refresh?: Refresh
   routing?: Routing
+  body?: TDocument[]
   _source?: SearchSourceConfigParam
   _source_excludes?: Fields
   _source_includes?: Fields

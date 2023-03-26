@@ -65,4 +65,22 @@ describe('elastic-client', () => {
     })
     expect(result.code).toBe(200)
   })
+
+  it('should bulk index', async () => {
+    const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
+    const result = await client.bulk({
+      index: 'hello-world',
+      body: [
+        { index: { _index: 'test', _id: '1' } },
+        { field1: 'value1' },
+        { delete: { _index: 'test', _id: '2' } },
+        { create: { _index: 'test', _id: '3' } },
+        { field1: 'value3' },
+        { update: { _id: '1', _index: 'test' } },
+        { doc: { field2: 'value2' } },
+      ],
+    })
+
+    expect(result.code).toBe(200)
+  })
 })
