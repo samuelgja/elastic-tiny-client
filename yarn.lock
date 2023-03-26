@@ -1748,6 +1748,11 @@ dot-prop@^5.1.0:
   dependencies:
     is-obj "^2.0.0"
 
+elastic-tiny-client@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/elastic-tiny-client/-/elastic-tiny-client-0.0.3.tgz#aa829c5b42420c3104656fc8af6b776b1b997d02"
+  integrity sha512-6Xf7PFTP6WfDKbS+OqXBFyl31vfQ35nWBkz/R12uDxMChD+612rCyrL7j1q3lcQeP69syBnV1JZAzGxEZ7XNTQ==
+
 electron-to-chromium@^1.4.284:
   version "1.4.340"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.340.tgz#3a6d7414c1fc2dbf84b6f7af3ec24270606c85b8"

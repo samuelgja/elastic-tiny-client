@@ -10,7 +10,7 @@
     "format": "npx prettier --list-different --write \"src/**/*.{ts,tsx}\"",
     "code-check": "yarn typecheck && yarn lint && yarn format && bun test",
     "typecheck": "tsc --noEmit",
-    "pub": "yarn code-check && yarn build && yarn publish",
+    "pub": "yarn code-check && yarn build && cd lib &&  yarn publish",
     "test": "jest --env=jsdom --verbose --runInBand"
   },
   "devDependencies": {
@@ -38,5 +38,8 @@
     "prettier": "^2.8.7",
     "ts-jest": "^29.0.5",
     "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "elastic-tiny-client": "^0.0.3"
   }
 }
