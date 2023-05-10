@@ -90,4 +90,31 @@ describe('elastic-client', () => {
 
     expect(result.code).toBe(200)
   })
+  it('should bulk index custom', async () => {
+    const bulkOptions = {
+      body: [
+        {
+          update: {
+            _index: 'hash_tags',
+            _id: '123123a',
+          },
+        },
+        {
+          doc: {
+            name: 'h1',
+            use_count: 1000,
+            date_create: new Date(),
+            date_update: new Date(),
+          },
+          doc_as_upsert: true,
+        },
+      ],
+      refresh: true,
+    }
+
+    const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
+    const result = await client.bulk(bulkOptions)
+
+    expect(result.code).toBe(200)
+  })
 })
