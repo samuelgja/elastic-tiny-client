@@ -73,6 +73,25 @@ describe('elastic-client', () => {
     expect(response.code).toBe(200)
   })
 
+  it('should update by query document', async () => {
+    const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
+
+    const response = await client.updateByQuery({
+      index: 'hello-world',
+      query: {
+        bool: {
+          must: {
+            match: {
+              hello: false,
+            },
+          },
+        },
+      },
+    })
+
+    expect(response.code).toBe(200)
+  })
+
   it('should search document', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
     const result = await client.search({

@@ -18,6 +18,8 @@ import {
   IndicesRefreshResponse,
   SearchRequest,
   SearchResponse,
+  UpdateByQueryRequest,
+  UpdateByQueryResponse,
   UpdateRequest,
   UpdateResponse,
 } from './types'
@@ -255,6 +257,55 @@ export class ElasticClient {
       url += `?${queryParams}`
     }
     delete params.id
+    delete params.index
+    return await this.fetch(url, {
+      method: 'POST',
+      headers: this.#headers,
+      body: JSON.stringify(params),
+    })
+  }
+
+  async updateByQuery(params: UpdateByQueryRequest): Promise<Response<UpdateByQueryResponse>> {
+    let url = `/${params.index}/_update_by_query`
+
+    const queryParams = queryParametersGenerator(
+      {
+        allow_no_indices: params.allow_no_indices,
+        analyzer: params.analyzer,
+        conflicts: 'proceed' ?? params.conflicts,
+        analyze_wildcard: params.analyze_wildcard,
+        default_operator: params.default_operator,
+        df: params.df,
+        expand_wildcards: params.expand_wildcards,
+        from: params.from,
+        ignore_unavailable: params.ignore_unavailable,
+        lenient: params.lenient,
+        max_docs: params.max_docs,
+        pipeline: params.pipeline,
+        preference: params.preference,
+        refresh: params.refresh,
+        request_cache: params.request_cache,
+        requests_per_second: params.requests_per_second,
+        routing: params.routing,
+        scroll: params.scroll,
+        scroll_size: params.scroll_size,
+        search_timeout: params.search_timeout,
+        search_type: params.search_type,
+        slices: params.slices,
+        sort: params.sort,
+        stats: params.stats,
+        terminate_after: params.terminate_after,
+        timeout: params.timeout,
+        version: params.version,
+        version_type: params.version_type,
+        wait_for_active_shards: params.wait_for_active_shards,
+      },
+      params
+    )
+
+    if (queryParams) {
+      url += `?${queryParams}`
+    }
     delete params.index
     return await this.fetch(url, {
       method: 'POST',
