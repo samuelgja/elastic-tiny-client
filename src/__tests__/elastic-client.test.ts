@@ -25,6 +25,42 @@ describe('elastic-client', () => {
     expect(response.code).toBe(201)
   })
 
+  it('should index document', async () => {
+    const client = new ElasticClient({
+      hosts: ['http://localhost:9200'],
+    })
+
+    const count = 100
+
+    const promises: Array<Promise<{ code: number }>> = []
+    for (let index = 0; index < count; index++) {
+      promises.push(
+        client.update({
+          retry_on_conflict: 1000,
+          index: 'hello-world',
+          doc: {
+            hello: true,
+            user: {
+              hello: true,
+              dogs: [
+                {
+                  name: Math.random() * 1000,
+                },
+              ],
+            },
+          },
+          id: '123',
+          refresh: true,
+        })
+      )
+    }
+    const result = await Promise.all(promises)
+
+    for (const response of result) {
+      expect(response.code).toBe(200)
+    }
+  })
+
   it('should update document', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
 
@@ -50,6 +86,7 @@ describe('elastic-client', () => {
 
     expect(result.code).toBe(200)
   })
+
   it('should count document', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
     const result = await client.countIndex({
