@@ -147,7 +147,9 @@ describe('elastic-client', () => {
           hello: true,
         },
       },
+      refresh: true,
     })
+
     await client.refreshIndex({ index: 'hello-world2' })
     const search = await client.search({
       index: 'hello-world2',
