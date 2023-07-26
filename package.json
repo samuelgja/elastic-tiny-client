@@ -1,6 +1,6 @@
 {
   "name": "elastic-tiny-client",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc && node scripts/copy-data.mjs",
@@ -10,7 +10,7 @@
     "format": "npx prettier --list-different --write \"src/**/*.{ts,tsx}\"",
     "code-check": "yarn typecheck && yarn lint && yarn format && bun test",
     "typecheck": "tsc --noEmit",
-    "pub": "yarn code-check && yarn build && cd lib && yarn publish",
+    "pub": "yarn code-check && yarn build",
     "test": "jest --env=jsdom --verbose --runInBand"
   },
   "devDependencies": {
