@@ -1,5 +1,6 @@
 import { ElasticClient } from '../elastic-client'
 import 'isomorphic-fetch'
+
 describe('elastic-client', () => {
   it('should create and delete elastic index', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
@@ -127,6 +128,37 @@ describe('elastic-client', () => {
       id: '1',
     })
     expect(result.code).toBe(200)
+  })
+
+  it('should delete document', async () => {
+    const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
+
+    await client.index({
+      index: 'hello-world2',
+      document: { hello: true },
+      id: '21',
+    })
+
+    await client.refreshIndex({ index: 'hello-world2' })
+    await client.deleteByQuery({
+      index: 'hello-world2',
+      query: {
+        match: {
+          hello: true,
+        },
+      },
+    })
+    await client.refreshIndex({ index: 'hello-world2' })
+    const search = await client.search({
+      index: 'hello-world2',
+      query: {
+        match: {
+          hello: true,
+        },
+      },
+    })
+
+    expect(search.data.hits.hits.length).toBe(0)
   })
 
   it('should bulk index', async () => {

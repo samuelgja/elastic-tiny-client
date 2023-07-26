@@ -333,7 +333,7 @@ export class ElasticClient {
   }
 
   async deleteByQuery(params: DeleteByQueryRequest): Promise<Response<DeleteByQueryResponse>> {
-    let url = `/${params.index}_delete_by_query`
+    let url = `/${params.index}/_delete_by_query`
 
     const queryParams = queryParametersGenerator(
       {
