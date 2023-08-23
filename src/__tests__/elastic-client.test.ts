@@ -126,6 +126,7 @@ describe('elastic-client', () => {
     const result = await client.delete({
       index: 'hello-world',
       id: '1',
+      refresh: true,
     })
     expect(result.code).toBe(200)
   })
@@ -137,9 +138,9 @@ describe('elastic-client', () => {
       index: 'hello-world2',
       document: { hello: true },
       id: '21',
+      refresh: true,
     })
 
-    await client.refreshIndex({ index: 'hello-world2' })
     await client.deleteByQuery({
       index: 'hello-world2',
       query: {
@@ -150,7 +151,6 @@ describe('elastic-client', () => {
       refresh: true,
     })
 
-    await client.refreshIndex({ index: 'hello-world2' })
     const search = await client.search({
       index: 'hello-world2',
       query: {

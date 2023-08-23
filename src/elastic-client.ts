@@ -324,8 +324,27 @@ export class ElasticClient {
   }
 
   async delete(params: DeleteRequest): Promise<Response<DeleteResponse>> {
-    const url = `/${params.index}/_doc/${params.id}`
+    let url = `/${params.index}/_doc/${params.id}`
 
+    const queryParams = queryParametersGenerator(
+      {
+        id: params.id,
+        index: params.index,
+        if_primary_term: params.if_primary_term,
+        if_seq_no: params.if_seq_no,
+        refresh: params.refresh,
+        routing: params.routing,
+        timeout: params.timeout,
+        version: params.version,
+        version_type: params.version_type,
+        wait_for_active_shards: params.wait_for_active_shards,
+      },
+      params
+    )
+    if (queryParams) {
+      url += `?${queryParams}`
+    }
+    delete params.index
     return await this.fetch(url, {
       method: 'DELETE',
       headers: this.#headers,
