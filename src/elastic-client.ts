@@ -51,21 +51,36 @@ export interface ClientOptions {
   fetch?: typeof fetch
 }
 
+interface CustomUrl extends URL {
+  headers: Record<string, string>
+  Authorization?: string
+}
+
 export class ElasticClient {
-  readonly #hosts: string[]
+  readonly #hosts: CustomUrl[]
   readonly #headers = HEADERS
   readonly #authorization?: Authorization
   readonly #fetch = fetch
 
   constructor(options: ClientOptions) {
-    this.#hosts = options.hosts
+    this.#hosts = options.hosts.map((host) => {
+      const url: CustomUrl = new URL(host) as CustomUrl
+      if (url.password && url.username) {
+        url.Authorization = this.getAuthorizationValue({
+          username: url.username,
+          password: url.password,
+        })
+      }
+      return url
+    })
     this.#headers = options.customHeaders ? { ...HEADERS, ...options.customHeaders } : HEADERS
     this.#authorization = options.authorization
 
     if (this.#authorization) {
-      this.#headers.Authorization = `Basic ${Buffer.from(
-        `${this.#authorization.username}:${this.#authorization.password}`
-      ).toString('base64')}`
+      this.#headers.Authorization = this.getAuthorizationValue({
+        username: this.#authorization.username,
+        password: this.#authorization.password,
+      })
     }
 
     if (options.fetch) {
@@ -83,10 +98,17 @@ export class ElasticClient {
     let code = 500
     for (let index = 0; index < retries; index++) {
       const host = this.#hosts[Math.floor(Math.random() * this.#hosts.length)]
-      const fetchUrl = `${host}${urlWithoutHost}`
+
+      if (host.Authorization) {
+        options.headers = {
+          ...options.headers,
+          Authorization: host.Authorization,
+        }
+      }
+      const fetchUrl = `${host.host}${urlWithoutHost}`
+
       try {
         const response = await this.#fetch(fetchUrl, options)
-
         code = response.status
         if (response.ok) {
           return { code, data: await response.json() }
@@ -105,6 +127,12 @@ export class ElasticClient {
     }
 
     return { code, error, data: null }
+  }
+
+  getAuthorizationValue(authorization: Authorization): string {
+    return `Basic ${Buffer.from(`${authorization.username}:${authorization.password}`).toString(
+      'base64'
+    )}`
   }
 
   async search<T>(params: SearchRequest): Promise<Response<SearchResponse<T>>> {
