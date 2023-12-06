@@ -15,7 +15,7 @@ describe('elastic-client', () => {
     } catch {}
   })
 
-  it('should index document', async () => {
+  it('should index document 1', async () => {
     const client = new ElasticClient({ hosts: ['http://localhost:9200'] })
     const response = await client.index({
       index: 'hello-world',
@@ -26,7 +26,7 @@ describe('elastic-client', () => {
     expect(response.code).toBe(201)
   })
 
-  it('should index document', async () => {
+  it('should index document 2', async () => {
     const client = new ElasticClient({
       hosts: ['http://localhost:9200'],
     })
@@ -36,10 +36,9 @@ describe('elastic-client', () => {
     const promises: Array<Promise<{ code: number }>> = []
     for (let index = 0; index < count; index++) {
       promises.push(
-        client.update({
-          retry_on_conflict: 1000,
+        client.index({
           index: 'hello-world',
-          doc: {
+          document: {
             hello: true,
             user: {
               hello: true,

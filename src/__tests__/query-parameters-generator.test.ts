@@ -1,7 +1,7 @@
 import { queryParametersGenerator } from '../query-parameters-generator'
 
 describe('query-parameters-generator', () => {
-  it('should create query paramaters', () => {
+  it('should create query parameters', () => {
     const params = { hello: 'world', foo: 'bar' }
     const queryParams = queryParametersGenerator(
       {
