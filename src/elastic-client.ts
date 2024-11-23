@@ -178,7 +178,7 @@ export class ElasticClient {
   }
 
   async get<T>(params: GetRequest): Promise<Response<GetResponse<T>>> {
-    let url = `/${params.index}${params.id}`
+    let url = `/${params.index}/_doc/${params.id}`
 
     const queryParams = queryParametersGenerator(
       {
